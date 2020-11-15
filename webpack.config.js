@@ -56,7 +56,6 @@ const config = {
       	test: /\.(png|jpg|jpeg|gif|ico)$/i,
       	loader: [
           'url-loader?limit=1024&name=img/[name]-[hash:16].[ext]',
-          'image-webpack-loader'
       	]
       }
   	]

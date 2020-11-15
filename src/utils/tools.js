@@ -1,7 +1,7 @@
-function tplReplace(tpl,replaceObject){
-    return tpl.replace(/{{(.*?)}}/g,(node,key)=>{
-        return replaceObject[key]
-    })
+function tplReplace (tpl, replaceObject) {
+	return tpl.replace(/{{(.*?)}}/g, (node, key) => {
+		return replaceObject[key];
+	})
 }
 
 function trimSpace(str){
