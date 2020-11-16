@@ -2,24 +2,35 @@ import tpl from './index.tpl';
 import './index.scss';
 
 import {Logo} from './logo/index';
+import { Nav } from './nav/index';
 
 import tools from '../../utils/tools';
 
 class Header {
-    constructor(el){
+    constructor(el,fieldData,phoneData){
         this.name = 'header';
         this.$el = el;
         this.logo = new Logo();
+        this.nav = new Nav();
+        this.fieldData = fieldData;
+        this.phoneData = phoneData;
     }
 
-    init(){
-        this.render();
+    async init(){
+        await this.render();
+        this.bindEvent()
     }
 
-    render(){
-        console.log(tpl().replace(/{{(.*?)}}/g,this.logo.tpl()));
-        this.$el.append(tpl().replace(/{{(.*?)}}/g,this.logo.tpl()));
-        console.log(this.$el[0].outerHTML);
+    async render(){
+        await this.$el.append(tools.tplReplace(tpl(),{
+            logo: this.logo.tpl(),
+            nav: this.nav.tpl(this.fieldData)
+        }));
+    }
+
+    bindEvent(){
+        const $nav = $('.J_nav');
+        $nav.on('mouseenter','.nav-item',{phoneData:this.phoneData,oNav:this.nav},this.nav.navMouseIn)
     }
 }
 

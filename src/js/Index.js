@@ -1,20 +1,15 @@
-
 import { Header } from '../components/header/index';
-import '../scss/common.scss'
-
-class Index{
-    constructor(){
-        this.$app = $('<div id="app">');
-        this.init();
+import{ App } from './App'
+class Index extends App {
+    constructor($){
+       super($, {
+           phone:true,
+           swiper:true,
+           field:true
+       })
     }
-
-    init(){
-        this.render();
-    }
-
     render(){
-        new Header(this.$app).init();
-        console.log(new Header(this.$app));
+        new Header(this.$app,this.cache.fieldData,this.cache.phoneData).init();
         $('body').prepend(this.$app);
     }
 }
