@@ -35,7 +35,7 @@ class Nav{
             oNav = data.oNav;
         const field = $(this).attr('data-field'),
               $navMenu = $('.J_navMenu');
-        console.log();
+              
         $navMenu.html(oNav.navmenu.apendMenuCard(phoneData.filter(item => {
                 return item.field == field
             })))
