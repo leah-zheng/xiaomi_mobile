@@ -1,6 +1,8 @@
 import{ App } from './App';
 import { Header } from '../components/header/index';
 import { Carousel } from '../components/carousel/index';
+import { BoardTitle } from '../components/board_title/index';
+import { ShowBoard } from '../components/board_show/index';
 class Index extends App {
     constructor($){
        super($, {
@@ -13,6 +15,31 @@ class Index extends App {
         new Header(this.$app,this.cache.fieldData,this.cache.phoneData).init();
         new Carousel(this.$app, this.cache.swiperData).init();
         $('body').prepend(this.$app);
+        new BoardTitle(this.$app, '手机上新').init();
+        new ShowBoard(this.$app,this.filterPhoneData('new')).init();
+        new BoardTitle(this.$app, '超值手机').init();
+        new ShowBoard(this.$app,this.filterPhoneData('valuable')).init();
+        new BoardTitle(this.$app, '官方推荐').init();
+        new ShowBoard(this.$app,this.filterPhoneData('recom')).init();
+    }
+
+    filterPhoneData(field){
+         return this.cache.phoneData.filter((item,index)=>{
+            switch (field) {
+                case 'new':
+                    return item.new == 1
+                    break;
+                case 'valuable':
+                    return item.most_value == 1
+                    break;
+                case 'recom':
+                    return item.recom == 1
+                    break;
+            
+                default:
+                    break;
+            }
+        })
     }
 }
 
