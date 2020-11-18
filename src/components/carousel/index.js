@@ -18,7 +18,8 @@ class Carousel {
 
     async init(){
         await this.render();
-        this.autoPlay()
+        this.autoPlay();
+        this.bindEvent();
     }
     
     async render(){
@@ -26,7 +27,13 @@ class Carousel {
 
         this.$carousel = $('.J_carousel');
         this.$carItems = $('.car-item');
-        this.$indicator = this.$carousel.find('.indicator-item');
+        this.$carIndicator = this.$carousel.find('.indicator-item');
+    }
+
+    bindEvent(){
+        this.$carousel.on('mouseenter',$.proxy(this.mouseInOut,this));
+        this.$carousel.on('mouseleave',$.proxy(this.mouseInOut,this));
+        this.$carousel.on('click',$.proxy(this.carouselClick,this));
     }
 
     autoPlay(){
@@ -98,7 +105,42 @@ class Carousel {
 
         return list;
     }
+    //鼠标进入离开触发事件
+    mouseInOut(e){
+        const eType = e.type; //事件名称
+        
+        switch (eType) {
+            case 'mouseenter':
+                clearInterval(Carousel.timer);
+                break;
+            case 'mouseleave':
+                this.autoPlay()
+                break;
+        
+            default:
+                break;
+        }
+    }
+    //鼠标点击左右和indicators时触发的事件
+    carouselClick(e){
+        const tar = e.target,
+              className = tools.trimSpace(tar.className),
+              $tar = $(tar);
 
+        switch (className) {
+            case 'indicator-item':
+                this.curIdx = $tar.index();
+                this.fadeAction(this.curIdx);
+                break;
+            case 'car-control':
+                const dir = $tar.attr('data-dir');
+                this.run(dir);
+                break;
+        
+            default:
+                break;
+        }
+    }
 }
 
 export { Carousel }
