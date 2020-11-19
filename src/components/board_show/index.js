@@ -3,6 +3,7 @@ import tplItem from './tpl/board_item.tpl';
 import './index.scss';
 
 import tools from '../../utils/tools';
+import { NoDataTip } from '../noDataTip';
 
 class ShowBoard{
     constructor(el,phoneData){
@@ -17,13 +18,13 @@ class ShowBoard{
 
     render(){
         this.$el.append(tools.tplReplace(tpl(),{
-            list:this.makeList()
+            list:this.makeList(this.phoneData) || new NoDataTip().tpl()
         }))
     }
 
-    makeList(){
+    makeList(data){
         let list = '';
-        this.phoneData.forEach((item,index) => {
+        data.forEach((item,index) => {
             list += tools.tplReplace(tplItem(),{
                 isFirst: index % 5 == 0? 'first' :'',
                 id:item.id,
