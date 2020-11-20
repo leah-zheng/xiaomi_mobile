@@ -8,11 +8,12 @@ class ContentItem{
         this.name = 'contentItem';
     }
 
-    tpl(content,price,index){
+    tpl(content,price,pic,index){
         return tools.tplReplace(tpl(),{
-            isFirst:index === 0? 'first':'',
+            isCurrent:index === 0? 'content-item current':'content-item',
             content,
-            price:price ?price+'元' :''
+            price:price ?price+'元' :'',
+            pic
         })
     }
 }

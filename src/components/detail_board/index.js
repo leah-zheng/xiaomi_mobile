@@ -13,31 +13,56 @@ class DetailBoard {
     }
 
     init(){
-        this.render()
+        this.initPhoneData();
+        this.render();
+        this.initUserPhoneInfo();
+        this.bindEvent();
+    }
+
+    
+    //初始化phoneData
+    initPhoneData(){
+        const phoneData = this.phoneData;
+        phoneData.color = $.parseJSON(phoneData.color);
+        phoneData.version_info = $.parseJSON(phoneData.version_info);
+        phoneData.pics = $.parseJSON(phoneData.pics);
+
+    }
+
+    initUserPhoneInfo(){
+        const phoneData = this.phoneData;
+       
+        this.userPhoneInfo = {
+            id:phoneData.id,
+            color:phoneData.color[0],
+            pics:phoneData.pics[0][0][0],
+            price:phoneData.version_info[0].price,
+            version:phoneData.version_info[0].version,
+        }
     }
 
     render(){
         const detailTitle = new DetailTitle(),
               contentItem = new ContentItem(),
-              colors = $.parseJSON(this.phoneData.color),
-              versions = $.parseJSON(this.phoneData.version_info);
+              phoneData = this.phoneData;
 
+              
         let versionList = '',
             colorList = '';
-
-        colors.forEach((item,index) => {
-            colorList += contentItem.tpl(item,null,index);
+        
+        phoneData.color.forEach((item,index) => {
+            colorList += contentItem.tpl(item,null,phoneData.pics[index][index][0],index);
         })
 
-        versions.forEach((item,index) =>{
-            versionList += contentItem.tpl(item.version,item.price,index)
+        phoneData.version_info.forEach((item,index) =>{
+            versionList += contentItem.tpl(item.version,item.price,phoneData.pics[0][0][0],index)
         })
 
         this.$el.append(tools.tplReplace(tpl(),{
-            pic_url:$.parseJSON(this.phoneData.pics)[0][0][0],
-            phone_name:this.phoneData.phone_name,
-            slogan:this.phoneData.slogan,
-            default_price:this.phoneData.default_price,
+            pic_url:phoneData.pics[0][0][0],
+            phone_name:phoneData.phone_name,
+            slogan:phoneData.slogan,
+            default_price:phoneData.default_price,
             title_1:detailTitle.tpl('手机版本'),
             title_2:detailTitle.tpl('手机颜色'),
             versions:versionList,
@@ -45,7 +70,59 @@ class DetailBoard {
         }))
     }
 
+    bindEvent(){
+        const $versions = this.$el.find('.J_versions'),
+        $colors = this.$el.find('.J_colors');
+        
 
+        // this.versionItems = $versions.children('.content-item');
+        // this.colorItems = $colors.children('.content-item');
+        this.detailPic = this.$el.find('.J_detailPic');
+        
+        $versions.on('click', '.content-item', { _this: this }, this.onVersionsClick);
+        $colors.on('click', '.content-item', { _this: this }, this.onColorsClick);
+    }
+
+    onVersionsClick(ev){
+        const e = ev || window.event,
+              _this = e.data._this; 
+
+        _this.onVersionsChange(this);
+    }
+
+    onColorsClick(ev){
+        const e = ev || window.event,
+              _this = e.data._this; 
+        
+        _this.onColorsChange(this);
+    }
+
+    onVersionsChange(target){
+        const $target = $(target);
+              
+        //改变用户选择的数据
+        this.userPhoneInfo.version = $target.attr('data-content');
+        this.userPhoneInfo.price = $target.attr('data-price');
+        //改变当前选中的样式
+        $target.addClass('content-item current')
+            .siblings().removeClass('current')
+        
+        
+    }
+
+    onColorsChange(target){
+        const $target = $(target);
+              
+        //改变用户选择的数据
+        this.userPhoneInfo.color = $target.attr('data-color');
+        this.userPhoneInfo.img = $target.attr('data-pic');
+        //改变当前选中的样式
+        $target.addClass('content-item current')
+            .siblings().removeClass('current');
+
+        this.detailPic.attr('src',$target.attr('data-pic'));
+        
+    }
 }
 
 export {DetailBoard}
