@@ -17,7 +17,9 @@
 	    	<div class="content-wrapper J_colors clearfix">
 	    		{{colors}}
 	    	</div>
-	    	
+	    	<div class="content-wrapper J_btnGroup clearfix">
+				{{btnGroup}}
+			</div>
 	    </div>
 	</div>
 </div>

@@ -2,6 +2,8 @@ import tpl from './index.tpl';
 import './index.scss';
 import {DetailTitle} from './detail_title/index';
 import { ContentItem } from './content_item/index';
+import { BtnGroup } from './btn_group/index';
+import { DetailModel } from '../../models/detail';
 
 import tools from '../../utils/tools';
 
@@ -10,6 +12,7 @@ class DetailBoard {
         this.name = 'detailBoard';
         this.phoneData = phoneData;
         this.$el = el;
+        this.detailModel = new DetailModel();
     }
 
     init(){
@@ -44,6 +47,7 @@ class DetailBoard {
     render(){
         const detailTitle = new DetailTitle(),
               contentItem = new ContentItem(),
+              btnGroup = new BtnGroup(),
               phoneData = this.phoneData;
 
               
@@ -66,13 +70,15 @@ class DetailBoard {
             title_1:detailTitle.tpl('手机版本'),
             title_2:detailTitle.tpl('手机颜色'),
             versions:versionList,
-            colors:colorList
+            colors:colorList,
+            btnGroup:btnGroup.tpl()
         }))
     }
 
     bindEvent(){
         const $versions = this.$el.find('.J_versions'),
-        $colors = this.$el.find('.J_colors');
+              $colors = this.$el.find('.J_colors'),
+              $btnGroup = this.$el.find('.J_btnGroup');
         
 
         // this.versionItems = $versions.children('.content-item');
@@ -81,6 +87,25 @@ class DetailBoard {
         
         $versions.on('click', '.content-item', { _this: this }, this.onVersionsClick);
         $colors.on('click', '.content-item', { _this: this }, this.onColorsClick);
+        $btnGroup.on('click','.detail-btn',{ _this:this },this.onBtnClick);
+    }
+
+    onBtnClick(ev){
+        const e = ev || window.event,
+              _this = e.data._this;
+        let field = $(this).attr('data-field');
+
+        switch (field) {
+            case 'purchase':
+                _this.purchase();
+                break;
+            case 'addToCart':
+                _this.addToCart();
+                break;
+        
+            default:
+                break;
+        }
     }
 
     onVersionsClick(ev){
@@ -114,14 +139,22 @@ class DetailBoard {
         const $target = $(target);
               
         //改变用户选择的数据
-        this.userPhoneInfo.color = $target.attr('data-color');
-        this.userPhoneInfo.img = $target.attr('data-pic');
+        this.userPhoneInfo.color = $target.attr('data-content');
+        this.userPhoneInfo.pics = $target.attr('data-pic');
         //改变当前选中的样式
         $target.addClass('content-item current')
             .siblings().removeClass('current');
 
         this.detailPic.attr('src',$target.attr('data-pic'));
         
+    }
+
+    purchase(){
+        this.detailModel.purchase(this.userPhoneInfo)
+    }
+
+    addToCart(){
+        this.detailModel.addToCart(this.userPhoneInfo);
     }
 }
 

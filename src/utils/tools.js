@@ -35,9 +35,29 @@ function throttle(fn, delay){
       }
     }
   }
+
+function getDataTime(){
+  const date = new Date();
+  
+  let year = date.getFullYear(),
+      mouth = addZero(date.getMouth() + 1),
+      day = addZero(date.getDate()),
+      hours = addZero(date.getHours()),
+      minutes = addZero(date.getMinutes()),
+      seconds = addZero(date.getSeconds());
+
+  function addZero(value){
+    return value < 10 ? ('0'+value) : value;
+  }
+    
+  return `${year}-${mouth}-${day} ${hours}:${minutes}:${seconds}`
+}
+
+
 module.exports = {
     tplReplace,
     trimSpace,
     getUrlQueryValue,
-    throttle
+    throttle,
+    getDataTime
 }

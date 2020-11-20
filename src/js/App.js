@@ -21,17 +21,17 @@ class App {
     async getDatas(){
         const indexModels = new IndexModels();
         
-        await indexModels.getDatas({
+        const data = await indexModels.getDatas({
             swiper:this.swiper,
             phone:this.phone,
             field:this.field
-        }).then(res => {
-            this.cache = {
-                phoneData : res.phone_data,
-                swiperData: res.swiper_data,
-                fieldData: res.field_data
-            }
         })
+
+        this.cache = {
+            phoneData : data.phone_data || null,
+            swiperData: data.swiper_data || null,
+            fieldData: data.field_data|| null
+        }
     }
 }
 
