@@ -1,5 +1,5 @@
-<div class="cart-board cover">
-    <div class="container J_board clearfix">
+<div class="cart-board J_cartBoard cover">
+    <div class="container clearfix">
         <div class="cart-tb">
             <table>
                 <tr>

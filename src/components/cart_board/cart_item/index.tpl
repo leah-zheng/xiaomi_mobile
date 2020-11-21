@@ -1,6 +1,6 @@
 <tr>
     <td>
-        <input type="checkbox" data-cartid="{{cartId}}">
+        <input class="checkbox" type="checkbox" data-cartid="{{cartId}}">
     </td>
     <td>
         <span>{{cartId}}</span>
@@ -23,9 +23,9 @@
     </td>
     <td>{{color}}</td>
     <td>
-        <button class="purchase-btn J_purchaseBtn" data-cartid="{{cartId}}">结算</button>
+        <button class="purchase-btn" data-cartid="{{cartId}}">结算</button>
     </td>
     <td>
-        <a class="javascript:;" class="J_removeBtn" data-cartid="{{cartId}}">删除</a>
+        <a src="javascript:;" class="remove-btn" data-cartid="{{cartId}}">删除</a>
     </td>
 </tr>

@@ -152,7 +152,7 @@ class DetailBoard {
     }
 
     purchase(){
-        this.detailModel.purchase(this.userPhoneInfo,()=>{
+        this.detailModel.purchase(this.userPhoneInfo,true,()=>{
             window.location.href = 'order.html';
         })
     }
