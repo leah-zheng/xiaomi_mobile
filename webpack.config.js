@@ -8,7 +8,10 @@ const config = {
   entry: {
   	index: path.resolve(__dirname, './src/js/Index.js'),
     list: path.resolve(__dirname, './src/js/List.js'),
-    detail: path.resolve(__dirname, './src/js/Detail.js')
+    detail: path.resolve(__dirname, './src/js/Detail.js'),
+    cart: path.resolve(__dirname, './src/js/Cart.js'),
+    order: path.resolve(__dirname, './src/js/Order.js')
+
   },
   output: {
   	path: path.resolve(__dirname + '/dist'),
@@ -99,6 +102,32 @@ const config = {
       title: '小米手机官网',
       chunksSortMode: 'manual',
       chunks: ['detail'],
+      excludeChunks: ['node_modules'],
+      hash: true
+    }),
+    new htmlWebpackPlugin({
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true
+      },
+      filename: 'cart.html',
+      template: path.resolve(__dirname, 'src/cart.html'),
+      title: '小米手机官网',
+      chunksSortMode: 'manual',
+      chunks: ['cart'],
+      excludeChunks: ['node_modules'],
+      hash: true
+    }),
+    new htmlWebpackPlugin({
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true
+      },
+      filename: 'order.html',
+      template: path.resolve(__dirname, 'src/order.html'),
+      title: '小米手机官网',
+      chunksSortMode: 'manual',
+      chunks: ['order'],
       excludeChunks: ['node_modules'],
       hash: true
     })

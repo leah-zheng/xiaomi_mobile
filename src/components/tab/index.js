@@ -99,7 +99,7 @@ class Tab {
                 dataLen = data.length;
 
                 if(dataLen === 0) {
-                    $board.html(this.noDataTip.tpl())
+                    $board.html(this.noDataTip.tpl('未搜索到相关数据'))
                 }else{
                     $board.html(oShowBoard.makeList(data));
                 }

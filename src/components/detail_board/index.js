@@ -37,6 +37,8 @@ class DetailBoard {
        
         this.userPhoneInfo = {
             id:phoneData.id,
+            name:phoneData.phone_name,
+            link:window.location.href,
             color:phoneData.color[0],
             pics:phoneData.pics[0][0][0],
             price:phoneData.version_info[0].price,
@@ -55,11 +57,11 @@ class DetailBoard {
             colorList = '';
         
         phoneData.color.forEach((item,index) => {
-            colorList += contentItem.tpl(item,null,phoneData.pics[index][index][0],index);
+            colorList += contentItem.tpl(item,null,phoneData.pics[index][index][0],phoneData.phone_name,index);
         })
 
         phoneData.version_info.forEach((item,index) =>{
-            versionList += contentItem.tpl(item.version,item.price,phoneData.pics[0][0][0],index)
+            versionList += contentItem.tpl(item.version,item.price,null,phoneData.phone_name,index)
         })
 
         this.$el.append(tools.tplReplace(tpl(),{
@@ -150,11 +152,15 @@ class DetailBoard {
     }
 
     purchase(){
-        this.detailModel.purchase(this.userPhoneInfo)
+        this.detailModel.purchase(this.userPhoneInfo,()=>{
+            window.location.href = 'order.html';
+        })
     }
 
     addToCart(){
-        this.detailModel.addToCart(this.userPhoneInfo);
+        this.detailModel.addToCart(this.userPhoneInfo,()=>{
+            window.location.href = 'cart.html';
+        });
     }
 }
 

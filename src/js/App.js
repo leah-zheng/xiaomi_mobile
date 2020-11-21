@@ -33,6 +33,25 @@ class App {
             fieldData: data.field_data|| null
         }
     }
+
+    filterPhoneData(field){
+        return this.cache.phoneData.filter((item,index)=>{
+           switch (field) {
+               case 'new':
+                   return item.new == 1
+                   break;
+               case 'valuable':
+                   return item.most_value == 1
+                   break;
+               case 'recom':
+                   return item.recom == 1
+                   break;
+           
+               default:
+                   break;
+           }
+       })
+   }
 }
 
 export { App }

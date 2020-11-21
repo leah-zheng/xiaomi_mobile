@@ -36,11 +36,11 @@ function throttle(fn, delay){
     }
   }
 
-function getDataTime(){
+function getDateTime(){
   const date = new Date();
   
   let year = date.getFullYear(),
-      mouth = addZero(date.getMouth() + 1),
+      mouth = addZero(date.getMonth() + 1),
       day = addZero(date.getDate()),
       hours = addZero(date.getHours()),
       minutes = addZero(date.getMinutes()),
@@ -53,11 +53,21 @@ function getDataTime(){
   return `${year}-${mouth}-${day} ${hours}:${minutes}:${seconds}`
 }
 
+function setRandonNo(num){
+  let no = '';
+  for(let i = 0; i <num; i++){
+    no+= Math.floor(Math.random() *10);
+  }
+
+  return new Date().getTime() + no;
+}
+
 
 module.exports = {
     tplReplace,
     trimSpace,
     getUrlQueryValue,
     throttle,
-    getDataTime
+    getDateTime,
+    setRandonNo
 }

@@ -16,7 +16,7 @@ class DetailModel {
         })
     }
 
-    addToCart(userPhoneInfo){
+    addToCart(userPhoneInfo,callback){
         let cartData = localStorage.getItem('cartData');
         
         if(cartData){
@@ -41,18 +41,20 @@ class DetailModel {
         }
 
         function addToCartData(){
+            userPhoneInfo.cartId = tools.setRandonNo(6);
             cartData.push(userPhoneInfo);
-            localStorage.setItem('cartData',JSON.stringify(cartData))
+            localStorage.setItem('cartData',JSON.stringify(cartData));
+            callback();
         }
     }
 
-    purchase(userPhoneInfo){
+    purchase(userPhoneInfo,callback){
         let purchaseData = localStorage.getItem('purchaseData');
 
         if(purchaseData){
             purchaseData = $.parseJSON(purchaseData);
 
-            const _arr = purchase.filter(item => {
+            const _arr = purchaseData.filter(item => {
                 if(item.id === userPhoneInfo.id){
                     if(item.version === userPhoneInfo.version && item.color === userPhoneInfo.color){
                         return true;
@@ -68,20 +70,22 @@ class DetailModel {
             }
             
         }else{
-            purchase = [];
+            purchaseData = [];
             addPurchaseData();
             removeInfoFromCart();
         }
 
         function addPurchaseData(){
-            userPhoneInfo.purchaseTime = tools.getDataTime();
+            userPhoneInfo.orderId = tools.setRandonNo(6);
+            userPhoneInfo.purchaseTime = tools.getDateTime();
             purchaseData.push(userPhoneInfo);
             localStorage.setItem('purchaseData', JSON.stringify(purchaseData));
             alert('已成功购买该产品');
+            callback();
         }
 
         function removeInfoFromCart(){
-            let cartData = localStorage.getItem('cartDate');
+            let cartData = localStorage.getItem('cartData');
             
             if(cartData){
                 cartData = $.parseJSON(cartData);

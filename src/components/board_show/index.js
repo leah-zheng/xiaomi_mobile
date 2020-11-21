@@ -18,7 +18,7 @@ class ShowBoard{
 
     render(){
         this.$el.append(tools.tplReplace(tpl(),{
-            list:this.makeList(this.phoneData) || new NoDataTip().tpl()
+            list:this.makeList(this.phoneData) || new NoDataTip().tpl('未搜索到相关数据')
         }))
     }
 
