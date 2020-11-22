@@ -153,20 +153,24 @@ class CartBoard{
 
      totalPurchase(){
          const userPhoneInfo = [];
-        
-         this.selectedItems.forEach((elem) =>{
-             this.cartData.forEach(item =>{
-                 if(item.cartId === elem){
-                     delete item.cartId;
-                     userPhoneInfo.push(item);
-                 }
-             })
-         })
+        if(this.selectedItems && this.selectedItems.length >0){
+            this.selectedItems.forEach((elem) =>{
+                this.cartData.forEach(item =>{
+                    if(item.cartId === elem){
+                        delete item.cartId;
+                        userPhoneInfo.push(item);
+                    }
+                })
+            })
 
-         userPhoneInfo.forEach((userPhoneInfo) =>{
-             this.detailModel.purchase(userPhoneInfo,false);
-         });
-         window.location.href = 'order.html';
+            userPhoneInfo.forEach((userPhoneInfo) =>{
+                this.detailModel.purchase(userPhoneInfo,false);
+            });
+            window.location.href = 'order.html';
+        }else{
+            alert('请选择您要结算的商品')
+        }
+         
      }
 }
 

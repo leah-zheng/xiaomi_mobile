@@ -93,10 +93,10 @@ class Carousel {
 
     makeList(){
         let list = "";
-
+        
         this.data.forEach((item,idx) => {
             list += tools.tplReplace(itemTpl(),{
-                id:item.phoneId,
+                id:item.phone_id,
                 swiper_img:item.pic,
                 alt:item.alt,
                 isActive:idx === 0 ? 'active' : ""
